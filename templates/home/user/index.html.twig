@@ -1,0 +1,14 @@
+{% extends "base.html.twig"%}
+
+{% block body %}
+    <h1>
+        Bonjour {{ app.session.get('user') }}
+        votre id est {{ id }}
+    </h1>
+    <a href="{{ path('home', {'userName': 'Albert'}) }}">Lien vers home (Albert)</a>
+{% endblock %}
+
+{% block message %}
+    {{ parent() }}
+    <p>Ceci vient de la page user</p>
+{% endblock %}
