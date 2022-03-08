@@ -1,0 +1,10 @@
+<ul class="list-group">
+    {% for product in productList %}
+        <li class="list-group-item">
+            <a class="btn list-group-item-action"
+               href="{{ path('product_details', {'id': product.id}) }}">
+                {{ product.name | upper }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

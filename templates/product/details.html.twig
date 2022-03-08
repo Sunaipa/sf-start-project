@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="d-flex justify-content-end">
+        <a href="{{ path('product_list') }}"
+           class="btn btn-primary">
+            retour
+        </a>
+    </div>
+    {% if product is not null %}
+        <h1> {{ product.name }} </h1>
+        <p>prix : {{ product.price }}</p>
+        <p>id: {{ product.id }}</p>
+    {% else %}
+        <h4>Cet id est inconnu</h4>
+    {% endif %}
+{% endblock %}

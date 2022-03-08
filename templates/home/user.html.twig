@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {{ render(path('nav',
+        {"current": app.request.attributes.get("_route")})
+    )
+    }}
+    <h1>
+        Bonjour {{ app.session.get('user') }}
+        votre id est {{ id }}
+    </h1>
+
+
+{% endblock %}
+
+{% block message %}
+    {{ parent() }}
+    <p>ceci vient de la page user</p>
+
+    {{ parent() }}
+{% endblock %}

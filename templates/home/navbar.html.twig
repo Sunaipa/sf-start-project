@@ -1,0 +1,10 @@
+<h2>Nav</h2>
+
+{{ current }}
+
+{% if current != 'user' %}
+    <a href="{{ path('user', {'id': '12'}) }}">Lien vers user</a>
+{%  endif %}
+{% if current != 'home' %}
+    <a href="{{ path('home', {'userName': 'Albert'}) }}">lien vers home (albert)</a>
+{% endif %}
