@@ -1,9 +1,9 @@
 <h4>Liste des catégories</h4>
 <ul class="list-group">
-    {% for category in categoryList %}
-        <li class="{{ html_classes('list-group-item', {'active': category == currentCategory}) }}">
-            <a href="{{ path('product_by_category', {'category': category}) }}" class="list-group-item-action">
-                {{ category }}
+    {% for item in categoryList %}
+        <li class="{{ html_classes('list-group-item', {'active': item.category == currentCategory}) }}">
+            <a href="{{ path('product_by_category', {'category': item.category}) }}" class="list-group-item-action">
+                {{ item.category }}
             </a>
         </li>
         {#

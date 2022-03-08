@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductRepository;
 use App\Service\ProductService;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -10,19 +11,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/product")     // Prefix toute les routes de cette classe
+ * @Route("/product")   // Prefix toute les routes de cette classe
  *
  */
 class ProductController extends AbstractController {
 
-    private ProductService $productService;
+    private ProductRepository $repository;
 
     /**
-     * @param ProductService $productService
+     * @param ProductRepository $repository
      */
-    public function __construct(ProductService $productService)
+    public function __construct(ProductRepository $repository)
     {
-        $this->productService = $productService;
+        $this->repository = $repository;
     }
 
 
@@ -33,7 +34,7 @@ class ProductController extends AbstractController {
      */
     public function details(int $id){
         return $this->render("product/details.html.twig", [
-            "product" => $this->productService->getOneById($id)
+            "product" => $this->repository->findOneById($id)
         ]);
     }
 
@@ -44,12 +45,12 @@ class ProductController extends AbstractController {
     public function list(LoggerInterface $logger): Response{
 
         $logger->debug("coucou(tu veux voir ma b...), on est passé dans list");
-        dump($this->productService->getAll());
+        //dump($this->productService->getAll());
 
         return $this->render("product/list.html.twig", [
-            "productList" => $this->productService->getAll(),
+            "productList" => $this->repository->findAll(),
             "title" => "liste de tous les produits",
-            "categoryList" => $this->productService->getDistinctCategories(),
+            "categoryList" => $this->repository->getDisctinctCategories(),
             "currentCategory" => null
         ]);
     }
@@ -62,9 +63,9 @@ class ProductController extends AbstractController {
      */
     public function byCategory(string $category): Response{
         return $this->render("product/list.html.twig", [
-            "productList" => $this->productService->getAllByCategory($category),
+            "productList" => $this->repository->findBy(["category" => $category]),
             "title" => "liste des produits dans la catégorie : $category",
-            "categoryList" => $this->productService->getDistinctCategories(),
+            "categoryList" => $this->repository->getDisctinctCategories(),
             "currentCategory" => $category
         ]);
     }
