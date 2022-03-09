@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Author index{% endblock %}
+
+{% block body %}
+    <h1>Author index</h1>
+
+    <div class="d-flex justify-content-end">
+        <a href="{{ path("app_author_new") }}" class="btn btn-primary">Nouvel auteur</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Nationality</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for author in authors %}
+            <tr>
+                <td>
+                    <a href="{{ path('app_author_show', {'id': author.id}) }}">
+                        {{ author.id }}
+                    </a>
+                </td>
+                <td>{{ author.firstName }}</td>
+                <td>{{ author.lastName }}</td>
+                <td>{{ author.nationality }}</td>
+                <td>
+                    <a href="{{ path('app_author_edit', {'id': author.id}) }}" class="btn btn-warning btn-sm me-3">Modifier</a>
+                    <a href="{{ path('app_author_delete', {'id': author.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_author_new') }}">Create new</a>
+{% endblock %}

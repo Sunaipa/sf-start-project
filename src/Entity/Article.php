@@ -28,6 +28,9 @@ class Article
     #[ORM\ManyToOne(targetEntity: Author::class)]
     private Author $author;
 
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    private Category $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Article
     public function setAuthor(?Author $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
