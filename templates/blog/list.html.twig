@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ title }}</h1>
+
+    <p>Il y a {{ articleList | length }} articles</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Date de publication</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articleList %}
+            <tr>
+                <td>
+                    <a href="{{ path('blog_details', {'id': article.id}) }}">
+                        {{ article.title | capitalize }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('blog_by_author', {'authorId': article.author.id}) }}">
+                        {{ article.author.fullName }}
+                    </a>
+                </td>
+                <td>{{ article.createdAt | date('d/m/Y') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Blog{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        {%  for article in articleList %}
+            <div class="col-md-6">
+                <h4> {{ article.title | capitalize }} </h4>
+                <p>
+                    publié le : {{ article.createdAt | date('d/m/Y') }}
+                    par : {{ article.author.fullName }}
+                </p>
+                <p>{{ article.excerpt(30) }} ... <a href="{{ path('blog_details', {'id': article.id}) }}">En savoir plus</a></p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

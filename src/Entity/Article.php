@@ -25,11 +25,26 @@ class Article
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Author::class)]
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'articles')]
     private Author $author;
 
     #[ORM\ManyToOne(targetEntity: Category::class)]
     private Category $category;
+
+
+    /**
+     * @param int $numberOfWords
+     * @return string
+     */
+    public function getExcerpt(int $numberOfWords): string{
+        $tab = array_slice(
+          explode(' ', $this->content),
+          0,
+          $numberOfWords
+        );
+        return implode(' ', $tab);
+    }
+
 
     public function getId(): ?int
     {

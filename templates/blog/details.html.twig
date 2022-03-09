@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> {{ article.title | capitalize }} </h1>
+    <p>
+        publié le : {{ article.createdAt | date('d/m/Y') }}
+        par : {{ article.author.fullName }}
+    </p>
+    <p class="text-end">{{ article.category.categoryName }}</p>
+    <hr>
+    <div>
+        {{ article.content }}
+    </div>
+{% endblock %}
