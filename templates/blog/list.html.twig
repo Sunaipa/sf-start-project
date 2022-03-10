@@ -1,36 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog-layout-with-sidebar.html.twig' %}
 
 {% block body %}
 
-    <h1>{{ title }}</h1>
+    <div class="col-md-8">
+        <h1>{{ title }}</h1>
 
-    <p>Il y a {{ articleList | length }} articles</p>
+        <p>Il y a {{ articleList | length }} articles</p>
 
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Titre</th>
                 <th>Auteur</th>
+                <th>Categorie</th>
                 <th>Date de publication</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for article in articleList %}
-            <tr>
-                <td>
-                    <a href="{{ path('blog_details', {'id': article.id}) }}">
-                        {{ article.title | capitalize }}
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('blog_by_author', {'authorId': article.author.id}) }}">
-                        {{ article.author.fullName }}
-                    </a>
-                </td>
-                <td>{{ article.createdAt | date('d/m/Y') }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for article in articleList %}
+                <tr>
+                    <td>
+                        <a href="{{ path('blog_details', {'id': article.id}) }}">
+                            {{ article.title | capitalize }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('blog_by_author', {'authorId': article.author.id}) }}">
+                            {{ article.author.fullName }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('blog_by_category', {'categoryId': article.category.id}) }}">
+                            {{ article.category.categoryName }}
+                        </a>
+                    </td>
+                    <td>{{ article.createdAt | date('d/m/Y') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

@@ -1,14 +1,42 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog-layout-with-sidebar.html.twig' %}
 
 {% block body %}
-    <h1> {{ article.title | capitalize }} </h1>
-    <p>
-        publié le : {{ article.createdAt | date('d/m/Y') }}
-        par : {{ article.author.fullName }}
-    </p>
-    <p class="text-end">{{ article.category.categoryName }}</p>
-    <hr>
-    <div>
-        {{ article.content }}
+    <div class="col-md-8">
+        <h1> {{ article.title | capitalize }} </h1>
+        <p>
+            publié le : {{ article.createdAt | date('d/m/Y') }}
+            par : {{ article.author.fullName }}
+        </p>
+        <p class="text-end">{{ article.category.categoryName }}</p>
+        <hr>
+        <div>
+            {{ article.content }}
+        </div>
+        <hr>
+        <h2>Les commentaires</h2>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_start(commentForm) }}
+                {{ form_rest(commentForm) }}
+                <button type="submit" class="btn btn-primary w-100">Valider</button>
+                {{ form_end(commentForm) }}
+            </div>
+            <div class="col-md-8">
+                {% for comment in article.comments %}
+                    <p>
+                        Le {{ comment.createdAt | date('d/m/Y') }}
+                        à {{ comment.createdAt | date('H:i') }}
+                        <br>
+                        {{ comment.email }} a dit :
+                    </p>
+                    <div class="ms-4">
+                        <h4>{{ comment.title }}</h4>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    <hr class="mb-4">
+                {% endfor %}
+            </div>
+        </div>
     </div>
+
 {% endblock %}

@@ -27,9 +27,13 @@ class Author
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
     private Collection $articles;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
+    private Collection $books;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     /**
@@ -111,6 +115,36 @@ class Author
             // set the owning side to null (unless already changed)
             if ($article->getAuthor() === $this) {
                 $article->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+    public function addBook(Book $book): self
+    {
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Book $book): self
+    {
+        if ($this->books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getAuthor() === $this) {
+                $book->setAuthor(null);
             }
         }
 

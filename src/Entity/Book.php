@@ -19,8 +19,8 @@ class Book
     #[ORM\Column(type: 'string', length: 255)]
     private $genre;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $auteur;
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
+    private Author $author;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $editeur;
@@ -89,6 +89,18 @@ class Book
     public function setPrix(int $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
